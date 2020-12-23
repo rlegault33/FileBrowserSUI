@@ -8,33 +8,39 @@
 import Foundation
 import UIKit
 import QuickLookThumbnailing
-public enum TitleMarkId: Int, CaseIterable {
-    case TITLE1 = 0
-    case TITLE2 = 1
+public enum ExInfoId: Int, CaseIterable {
+    case EXINFO1 = 0
+    case EXINFO2 = 1
     var idx: Int {
         switch self {
-        case .TITLE1:
-            return TitleMarkId.TITLE1.rawValue
-        case .TITLE2:
-            return TitleMarkId.TITLE1.rawValue
+        case .EXINFO1:
+            return ExInfoId.EXINFO1.rawValue
+        case .EXINFO2:
+            return ExInfoId.EXINFO2.rawValue
         }
     }
 }
 
-typealias FileExtraInfoGet = (URL) -> Bool
-typealias FileExtraInfoSet = (URL, Bool) -> Void
+public typealias FileExtraInfoGet = (URL) -> Bool
+public typealias FileExtraInfoSet = (URL, Bool) -> Void
 
-struct FileExtraInfo: Identifiable {
-    var id = UUID()
-    var title: String
-    var get: FileExtraInfoGet
-    var set: FileExtraInfoSet
+public struct  FileExtraInfo {
+    
+    public let title: String
+    public let get: FileExtraInfoGet
+    public let set: FileExtraInfoSet
+    
+    public init(title: String, get: @escaping FileExtraInfoGet, set: @escaping FileExtraInfoSet) {
+        self.title = title
+        self.get = get
+        self.set = set
+    }
 }
 
 /// FBFile is a class representing a file in FileBrowser
-class FBFile: Identifiable {
+public class FBFile: Identifiable, ObservableObject {
     /// Display name. String.
-    let id = UUID()
+    public let id = UUID()
     public let displayName: String
     // is Directory. Bool.
     public let isDirectory: Bool
@@ -47,10 +53,27 @@ class FBFile: Identifiable {
     // FBFileType
     public let type: FBFileType
     
+    public var fileExInfo0: FileExtraInfo?
+    public var fileExInfo1: FileExtraInfo?
+    
     // stores ability to get/set store bool info about the file
     // 2 Bool values
-    var fileExInfo: [FileExtraInfo] = []
-
+    @Published var fileExInfo0Value: Bool {
+        didSet {
+            if let fileExInfo = fileExInfo0 {
+                fileExInfo.set(filePath, fileExInfo0Value)
+            }
+        }
+    }
+    @Published var fileExInfo1Value: Bool {
+        didSet {
+            if let fileExInfo = fileExInfo1 {
+                fileExInfo.set(filePath, fileExInfo1Value)
+            }
+        }
+    }
+    
+    
     
     open func delete()
     {
@@ -71,7 +94,7 @@ class FBFile: Identifiable {
      
      - returns: FBFile object.
      */
-    init(filePath: URL) {
+    init(filePath: URL, xInfo0: FileExtraInfo?, xInfo1: FileExtraInfo?) {
         self.filePath = filePath
         let isDirectory = checkDirectory(filePath)
         self.isDirectory = isDirectory
@@ -91,33 +114,36 @@ class FBFile: Identifiable {
             }
         }
         self.displayName = filePath.lastPathComponent
-    }
-
-    func addTitle(titleMarkId: TitleMarkId, title:String, set:@escaping FileExtraInfoSet, get:@escaping FileExtraInfoGet) {
-        if fileExInfo.isEmpty {
-            fileExInfo.append(FileExtraInfo(title: title, get: get, set: set))
-        }
-
-        else if fileExInfo.count == 1 {
-            fileExInfo.insert(FileExtraInfo(title: title, get: get, set: set), at: titleMarkId.idx)
+        if let xInfo0 = xInfo0 {
+            fileExInfo0 = xInfo0
+            self.fileExInfo0Value = fileExInfo0!.get(filePath)
         } else {
-            fileExInfo[titleMarkId.idx] = FileExtraInfo(title: title, get: get, set: set)
+            self.fileExInfo0Value = false
+        }
+        
+        if let xInfo1 = xInfo1 {
+            fileExInfo1 = xInfo1
+            self.fileExInfo1Value = xInfo1.get(filePath)
+        } else {
+            self.fileExInfo1Value = false
         }
     }
+
     
-    func getExInfo(titleMarkId: TitleMarkId) -> Bool {
-        if (titleMarkId.idx >= fileExInfo.count) {
-            return false
-        }
-        return fileExInfo[titleMarkId.idx].get(filePath.standardizedFileURL)
-    }
     
-    func setExInfo(titleMarkId: TitleMarkId, value: Bool) {
-        if (titleMarkId.idx < fileExInfo.count) {
-            fileExInfo[titleMarkId.idx].set(filePath.standardizedFileURL, value)
+
+    func getExInfo() -> [FileExtraInfo] {
+        var array = [FileExtraInfo]()
+        if let info = fileExInfo0 {
+            array.append(info)
         }
+        if let info = fileExInfo1 {
+            array.append(info)
+        }
+        return array
     }
 }
+
 
 /**
  FBFile type

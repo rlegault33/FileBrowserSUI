@@ -51,7 +51,7 @@ class FileParser {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
     }
     
-    func filesForDirectory(_ directoryPath: URL) -> [FBFile]  {
+    func filesForDirectory(_ directoryPath: URL, xInfo0:FileExtraInfo?, xInfo1: FileExtraInfo?) -> [FBFile]  {
         var files = [FBFile]()
         var filePaths = [URL]()
         // Get contents
@@ -62,7 +62,7 @@ class FileParser {
         }
         // Parse
         for filePath in filePaths {
-            let file = FBFile(filePath: filePath)
+            let file = FBFile(filePath: filePath, xInfo0: xInfo0, xInfo1: xInfo1)
             if let excludesFilepaths = excludesFilepaths , excludesFilepaths.contains(file.filePath) {
                 continue
             }

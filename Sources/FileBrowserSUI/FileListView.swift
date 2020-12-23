@@ -7,12 +7,9 @@
 import Foundation
 import SwiftUI
 
-
-
-
-@available(iOS 13.0, *)
 struct FileListView: View {
     public var fileList: [FBFile] = []
+    
     var body: some View {
         HStack {
             List(fileList) { file in
@@ -22,17 +19,19 @@ struct FileListView: View {
                         Text(file.displayName).font(.body)
                         translateDateString(from: file.fileAttributes?.fileCreationDate() ?? Date()).font(.footnote)
                     }
-                    Spacer()
-                    extraInfoView(file:file)
+                    if !file.isDirectory {
+                        Spacer()
+                        extraInfoView1(file:file)
+                    }
                 }
-            }
+            }.buttonStyle(BorderlessButtonStyle())
         }
     }
     
     init (fileList: [FBFile]) {
         self.fileList = fileList
     }
-    @available(iOS 13.0, *)
+    
     func translateDateString(from:Date) -> Text {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd hh:mm:ss"
@@ -41,32 +40,43 @@ struct FileListView: View {
     
 }
 
-@available(iOS 13.0, *)
-struct extraInfoView: View {
-    let file: FBFile
-    
+
+
+struct extraInfoView1: View {
+    @ObservedObject var file: FBFile
+
     var body: some View {
         HStack {
-            ForEach(file.fileExInfo) { exInfo in
+            if let exInfo = file.fileExInfo0 {
                 HStack {
                     Text(exInfo.title)
-                    Button(action: {
-                        var markBool = exInfo.get(file.filePath)
-                        markBool.toggle()
-                        exInfo.set(file.filePath, markBool)
-                    }) {
-                        Image(systemName: exInfo.get(file.filePath) ? "checkmark.square" : "square")
+                    Image(systemName: file.fileExInfo0Value ? "checkmark.square" : "square").onTapGesture {
+                        file.fileExInfo0Value.toggle()
                     }
                 }
+            }
+            if let exInfo = file.fileExInfo1 {
+                HStack {
+                    Text(exInfo.title)
+                    Image(systemName: file.fileExInfo1Value ? "checkmark.square" : "square").onTapGesture {
+                        file.fileExInfo1Value.toggle()
+                    }
+                }
+                
             }
         }
     }
 }
 
+
+
+
+
+@available(iOS 13.0, *)
 struct SwiftUIView_Previews: PreviewProvider {
-    @available(iOS 13.0, *)
+
     static var previews: some View {
-        let fileList = FileParser.sharedInstance.filesForDirectory(FileParser.sharedInstance.documentsURL())
+        let fileList = FileParser.sharedInstance.filesForDirectory(FileParser.sharedInstance.documentsURL(), xInfo0: nil, xInfo1: nil)
         FileListView(fileList: fileList)
     }
     
