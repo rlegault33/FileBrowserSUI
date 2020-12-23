@@ -30,12 +30,16 @@ func previewInit() {
                                 return true
                                }, set: {file, value in
                                 return
+                               }, delete: {_ in
+                                return true
                                })
     extraInfo0 = FileExtraInfo(title: "test0",
                                get: {_ in
                                 return false
                                }, set: {file, value in
                                 return
+                               }, delete: {_ in
+                                return true
                                })
 }
 

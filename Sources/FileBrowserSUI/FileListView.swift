@@ -42,6 +42,11 @@ struct FileListView: View {
     
     func deleteFile(at offsets: IndexSet) {
         offsets.forEach({index in
+            if let exInfo = fileList[index].fileExInfo0 {
+                let _ = exInfo.delete(fileList[index].filePath)
+            } else if let exInfo = fileList[index].fileExInfo0 {
+                let _ = exInfo.delete(fileList[index].filePath)
+            }
            fileList[index].delete()
            fileList.remove(at: index)
         })

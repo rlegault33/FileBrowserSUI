@@ -29,11 +29,13 @@ public struct  FileExtraInfo {
     public let title: String
     public let get: FileExtraInfoGet
     public let set: FileExtraInfoSet
+    public let delete: FileExtraInfoGet
     
-    public init(title: String, get: @escaping FileExtraInfoGet, set: @escaping FileExtraInfoSet) {
+    public init(title: String, get: @escaping FileExtraInfoGet, set: @escaping FileExtraInfoSet, delete: @escaping FileExtraInfoGet) {
         self.title = title
         self.get = get
         self.set = set
+        self.delete = delete
     }
 }
 
