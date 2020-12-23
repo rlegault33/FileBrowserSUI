@@ -8,28 +8,43 @@ import Foundation
 import SwiftUI
 
 struct FileListView: View {
-    public var fileList: [FBFile] = []
-    
+    @State var fileList:[FBFile] = []
+    let validInitialPath: URL
+    let xInfo0: FileExtraInfo?
+    let xInfo1: FileExtraInfo?
     var body: some View {
         HStack {
-            List(fileList) { file in
-                HStack {
-                    Image(uiImage: file.type.image())
-                    VStack {
-                        Text(file.displayName).font(.body)
-                        translateDateString(from: file.fileAttributes?.fileCreationDate() ?? Date()).font(.footnote)
+            List {
+                ForEach(fileList, id: \.self) { file in
+                    HStack {
+                        Image(uiImage: file.type.image())
+                        VStack {
+                            Text(file.displayName).font(.body)
+                            translateDateString(from: file.fileAttributes?.fileCreationDate() ?? Date()).font(.footnote)
+                        }.onTapGesture {
+                            print("Tap")
+                            
+                        }
+                        if !file.isDirectory {
+                            Spacer()
+                            extraInfoView1(file:file)
+                        }
                     }
-                    if !file.isDirectory {
-                        Spacer()
-                        extraInfoView1(file:file)
-                    }
-                }
-            }.buttonStyle(BorderlessButtonStyle())
+                }.onDelete( perform: deleteFile)
+                    
+                
+            }
+        }.onAppear() {
+            let tmp =  FileParser.sharedInstance.filesForDirectory(validInitialPath, xInfo0: xInfo0, xInfo1: xInfo1)
+            fileList.append(contentsOf: tmp)
         }
     }
     
-    init (fileList: [FBFile]) {
-        self.fileList = fileList
+    func deleteFile(at offsets: IndexSet) {
+        offsets.forEach({index in
+           fileList[index].delete()
+           fileList.remove(at: index)
+        })
     }
     
     func translateDateString(from:Date) -> Text {
@@ -76,11 +91,6 @@ struct extraInfoView1: View {
 struct SwiftUIView_Previews: PreviewProvider {
 
     static var previews: some View {
-        let fileList = FileParser.sharedInstance.filesForDirectory(FileParser.sharedInstance.documentsURL(), xInfo0: nil, xInfo1: nil)
-        FileListView(fileList: fileList)
-    }
-    
-    init() {
-        
+        FileListView(validInitialPath: FileParser.sharedInstance.documentsURL(), xInfo0: nil, xInfo1: nil)
     }
 }

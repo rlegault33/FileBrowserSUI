@@ -38,9 +38,21 @@ public struct  FileExtraInfo {
 }
 
 /// FBFile is a class representing a file in FileBrowser
-public class FBFile: Identifiable, ObservableObject {
+public class FBFile: ObservableObject, Hashable {
+
+    public static func == (lhs: FBFile, rhs: FBFile) -> Bool {
+       return(lhs.uid == rhs.uid)
+    }
+    
+    var uid = UUID()
+    var hasValue: Int {
+        return uid.hashValue
+    }
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(uid)
+        hasher.combine(filePath)
+    }
     /// Display name. String.
-    public let id = UUID()
     public let displayName: String
     // is Directory. Bool.
     public let isDirectory: Bool
