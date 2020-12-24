@@ -3,12 +3,41 @@ import Foundation
 
 @available(iOS 13.0.0, *)
 public struct FileBrowserSUI: View {
+    @State var fileList:[FBFile] = []
     let validInitialPath: URL
     let extraInfo0: FileExtraInfo?
     let extraInfo1: FileExtraInfo?
     
     public var body: some View {
-        FileListView(validInitialPath: validInitialPath, xInfo0: extraInfo0, xInfo1: extraInfo1)
+        
+        HStack {
+            List {
+                ForEach(fileList, id: \.self) { file in
+                        NavigationLink(destination: FileLinkView(item:file)) {
+            
+                        HStack  {
+                            HStack {
+                                Image(uiImage: file.type.image())
+                                VStack {
+                                    Text(file.displayName).font(.body)
+                                    translateDateString(from: file.fileAttributes?.fileCreationDate() ?? Date()).font(.footnote)
+                                }
+                            }
+                            Spacer()
+                            if !file.isDirectory {
+                                extraInfoView1(file:file)
+                            }
+                        }
+                    }.navigationBarTitle(validInitialPath.lastPathComponent)
+                }.onDelete( perform: deleteFile)
+            }
+        }.onAppear() {
+            let tmp =  FileParser.sharedInstance.filesForDirectory(validInitialPath, xInfo0: extraInfo0, xInfo1: extraInfo1)
+            fileList.removeAll()
+            fileList.append(contentsOf: tmp)
+        }
+
+        
     }
     public init(initialPath: URL?, xInfo0:FileExtraInfo?, xInfo1: FileExtraInfo?) {
         validInitialPath = initialPath ?? FileParser.sharedInstance.documentsURL()
@@ -19,6 +48,31 @@ public struct FileBrowserSUI: View {
         validInitialPath = FileParser.sharedInstance.documentsURL()
         extraInfo0 = nil
         extraInfo1 = nil
+    }
+    
+    
+    func deleteFile(at offsets: IndexSet) {
+        offsets.forEach({index in
+            if let exInfo = fileList[index].fileExInfo0 {
+                let _ = exInfo.delete(fileList[index].filePath)
+            } else if let exInfo = fileList[index].fileExInfo0 {
+                let _ = exInfo.delete(fileList[index].filePath)
+            }
+           fileList[index].delete()
+           fileList.remove(at: index)
+        })
+    }
+    
+    func translateDateString(from:Date) -> Text {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd hh:mm:ss"
+        return Text(dateFormatter.string(from: from))
+    }
+    
+    func handleFilePress (selected:FBFile) {
+        if selected.isDirectory {
+            
+        }
     }
 }
 
@@ -43,7 +97,6 @@ func previewInit() {
                                })
 }
 
-@available(iOS 13.0, *)
 struct FileBrowserSUI_Previews: PreviewProvider {
     static var previews: some View {
         let paths = NSSearchPathForDirectoriesInDomains(
@@ -57,3 +110,28 @@ struct FileBrowserSUI_Previews: PreviewProvider {
     }
 }
 
+struct extraInfoView1: View {
+    @ObservedObject var file: FBFile
+
+    var body: some View {
+        HStack {
+            if let exInfo = file.fileExInfo0 {
+                HStack {
+                    Text(exInfo.title)
+                    Image(systemName: file.fileExInfo0Value ? "checkmark.square" : "square").onTapGesture {
+                        file.fileExInfo0Value.toggle()
+                    }
+                }
+            }
+            if let exInfo = file.fileExInfo1 {
+                HStack {
+                    Text(exInfo.title)
+                    Image(systemName: file.fileExInfo1Value ? "checkmark.square" : "square").onTapGesture {
+                        file.fileExInfo1Value.toggle()
+                    }
+                }
+                
+            }
+        }
+    }
+}

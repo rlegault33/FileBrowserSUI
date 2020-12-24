@@ -40,18 +40,18 @@ public struct  FileExtraInfo {
 }
 
 /// FBFile is a class representing a file in FileBrowser
-public class FBFile: ObservableObject, Hashable {
+public class FBFile: ObservableObject, Hashable, Identifiable {
 
     public static func == (lhs: FBFile, rhs: FBFile) -> Bool {
-       return(lhs.uid == rhs.uid)
+       return(lhs.id == rhs.id)
     }
     
-    var uid = UUID()
+    public var id = UUID()
     var hasValue: Int {
-        return uid.hashValue
+        return id.hashValue
     }
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(uid)
+        hasher.combine(id)
         hasher.combine(filePath)
     }
     /// Display name. String.
