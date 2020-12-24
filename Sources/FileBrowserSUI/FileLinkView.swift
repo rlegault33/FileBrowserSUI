@@ -13,7 +13,7 @@ struct FileLinkView: View {
         if (item.isDirectory) {
             FileBrowserSUI(initialPath: item.filePath, xInfo0: item.fileExInfo0, xInfo1: item.fileExInfo1)
         } else {
-            Text("TEST")
+            PreviewController(url:item.filePath)
         }
         
     }
