@@ -1,20 +1,17 @@
 //
-//  SwiftUIView.swift
+//  PreviewController.swift
 //  
 //
 //  Created by Richard Legault on 2020-12-23.
 //
 
-import Foundation
 import SwiftUI
 import QuickLook
-import UIKit
 
 struct PreviewController: UIViewControllerRepresentable {
-
-    
-    //typealias UIViewControllerType = PreviewController
+    typealias UIViewControllerType = QLPreviewController
     let url:URL
+    
     func makeUIViewController(context: Context) -> QLPreviewController {
         let controller = QLPreviewController()
         controller.dataSource = context.coordinator

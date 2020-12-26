@@ -4,6 +4,7 @@ import Foundation
 @available(iOS 13.0.0, *)
 public struct FileBrowserSUI: View {
     @State var fileList:[FBFile] = []
+    internal var didAppear: ((Self) -> Void)?
     let validInitialPath: URL
     let extraInfo0: FileExtraInfo?
     let extraInfo1: FileExtraInfo?
@@ -19,7 +20,7 @@ public struct FileBrowserSUI: View {
                             HStack {
                                 Image(uiImage: file.type.image())
                                 VStack {
-                                    Text(file.displayName).font(.body)
+                                    Text(file.displayName).font(.body).accessibility(identifier: "displayName")
                                     translateDateString(from: file.fileAttributes?.fileCreationDate() ?? Date()).font(.footnote)
                                 }
                             }
@@ -31,10 +32,11 @@ public struct FileBrowserSUI: View {
                     }.navigationBarTitle(validInitialPath.lastPathComponent)
                 }.onDelete( perform: deleteFile)
             }
-        }.onAppear() {
+        }.onAppear {
             let tmp =  FileParser.sharedInstance.filesForDirectory(validInitialPath, xInfo0: extraInfo0, xInfo1: extraInfo1)
             fileList.removeAll()
             fileList.append(contentsOf: tmp)
+            self.didAppear?(self)
         }
 
         
@@ -118,17 +120,21 @@ struct extraInfoView1: View {
             if let exInfo = file.fileExInfo0 {
                 HStack {
                     Text(exInfo.title)
-                    Image(systemName: file.fileExInfo0Value ? "checkmark.square" : "square").onTapGesture {
+                    Image(systemName: file.fileExInfo0Value ? "checkmark.square" : "square"
+                    ).onTapGesture {
                         file.fileExInfo0Value.toggle()
-                    }
+                    }.accessibility(identifier: "ExInfo0Select")
                 }
             }
             if let exInfo = file.fileExInfo1 {
                 HStack {
                     Text(exInfo.title)
-                    Image(systemName: file.fileExInfo1Value ? "checkmark.square" : "square").onTapGesture {
+                    Image(systemName: file.fileExInfo1Value ? "checkmark.square" : "square"
+                    )
+                    .onTapGesture {
                         file.fileExInfo1Value.toggle()
                     }
+                    .accessibility(identifier: "ExInfo1Select")
                 }
                 
             }
