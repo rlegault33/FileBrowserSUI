@@ -20,12 +20,22 @@ final class FileLinkViewTests: XCTestCase {
     
     func testListPreviewFile() {
         let bundlePath = getBundleTestRoot()
-        let resourceFile = bundlePath.appendingPathComponent("Baymax.jpg")
+        let resourceFile:URL = bundlePath.appendingPathComponent("Baymax.jpg")
         let item = FBFile(filePath: resourceFile, xInfo0: nil, xInfo1: nil)
         //let fileList = getBundleFileList()
         
-        let view = FileLinkView(item:item)
-        XCTAssertNoThrow( try view.inspect().view(PreviewController.self))
+        let preview = PreviewController(url: resourceFile)
+        
+        let view = FileLinkView(item: item) { file in
+            preview}
+        //XCTAssertThrowsError(
+//        do {
+//            try view.inspect().view(FileLinkView(item: item) {file in preview})
+//        }catch {
+//            print("*****")
+//            print (error)
+//        }
+        //)
         
     }
     
@@ -34,9 +44,11 @@ final class FileLinkViewTests: XCTestCase {
         let resourceFile = bundlePath.appendingPathComponent("_CodeSignature")
         let item = FBFile(filePath: resourceFile, xInfo0: nil, xInfo1: nil)
         //let fileList = getBundleFileList()
-        
-        let view = FileLinkView(item:item)
-        XCTAssertThrowsError( try view.inspect().view(FileBrowserSUI.self))
+        let preview = PreviewController(url: resourceFile)
+        let view = FileLinkView(item:item) { file in
+            preview
+        }
+        //XCTAssertThrowsError( try view.inspect().view(FileBrowserSUI.self))
         
     }
     
@@ -44,7 +56,12 @@ final class FileLinkViewTests: XCTestCase {
         print ("*** START ***")
         let bundlePath = getBundleTestRoot()
         let fileList = getBundleFileList()
-        var fbsView = FileBrowserSUI(initialPath: bundlePath, xInfo0: nil, xInfo1: nil)
+        let resourceFile = bundlePath.appendingPathComponent("_CodeSignature")
+        let preview = PreviewController(url: resourceFile)
+        var fbsView = FileBrowserSUI(initialPath: bundlePath, xInfo0: nil, xInfo1: nil) { file in
+            preview
+            
+        }
         do {
             try fbsView.inspect().callOnAppear()
             let exp = fbsView.on(\.didAppear) { view in
@@ -71,7 +88,11 @@ final class FileLinkViewTests: XCTestCase {
         let bundlePath = getBundleTestRoot()
         let fileList = getBundleFileList()
         let dataStore = MapExFileInfo()
-        var fbsView = FileBrowserSUI(initialPath: bundlePath, xInfo0: FileExtraInfo(title: "ExInfo0", get:dataStore.get0, set: dataStore.set0, delete: dataStore.delete), xInfo1: FileExtraInfo(title: "ExInfo0", get:dataStore.get0, set: dataStore.set0, delete: dataStore.delete))
+        let resourceFile = bundlePath.appendingPathComponent("_CodeSignature")
+        let preview = PreviewController(url: resourceFile)
+        var fbsView = FileBrowserSUI(initialPath: bundlePath, xInfo0: FileExtraInfo(title: "ExInfo0", get:dataStore.get0, set: dataStore.set0, delete: dataStore.delete), xInfo1: FileExtraInfo(title: "ExInfo0", get:dataStore.get0, set: dataStore.set0, delete: dataStore.delete)) { file in
+            preview
+        }
         do {
             try fbsView.inspect().callOnAppear()
             let exp = fbsView.on(\.didAppear) { view in

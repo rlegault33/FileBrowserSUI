@@ -212,28 +212,25 @@ public enum FBFileType: String {
             return
         }
         // Create a thumbnail for MP4 files
-        if #available(iOS 13.0, *) {
-            let size = CGSize(width: 60, height: 90)
-            let scale = UIScreen.main.scale
-            
-            let request = QLThumbnailGenerator.Request(
-                fileAt: fileName,
-                size: size,
-                scale: scale,
-                representationTypes: .all)
-       
-            let generator = QLThumbnailGenerator.shared
+        let size = CGSize(width: 60, height: 90)
+        let scale = UIScreen.main.scale
+        
+        let request = QLThumbnailGenerator.Request(
+            fileAt: fileName,
+            size: size,
+            scale: scale,
+            representationTypes: .all)
+   
+        let generator = QLThumbnailGenerator.shared
 
-            generator.generateBestRepresentation(for: request) { thumbnail, error in
-                if let thumbnail = thumbnail {
-                    completion(thumbnail.uiImage)
-                } else if let error = error {
-                    // Handle error
-                    print(error)
-                }
+        generator.generateBestRepresentation(for: request) { thumbnail, error in
+            if let thumbnail = thumbnail {
+                completion(thumbnail.uiImage)
+            } else if let error = error {
+                // Handle error
+                print(error)
             }
-        } else {
-            completion(self.image())
+        
         }
     }
 }
