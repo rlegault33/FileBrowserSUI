@@ -48,7 +48,10 @@ public struct FileBrowserSUI<LinkView: View>: View {
         HStack {
             List {
                 ForEach(fileList, id: \.self) { file in
-                    NavigationLink(destination: self.linkView(file.filePath)) {
+                    
+                    NavigationLink(destination: FileLinkView(item:file) { filePath in
+                        linkView(filePath)
+                    }) {
                         HStack  {
                             HStack {
                                 Image(uiImage: file.type.image())
@@ -59,7 +62,7 @@ public struct FileBrowserSUI<LinkView: View>: View {
                             }
                             Spacer()
                             if !file.isDirectory {
-                                extraInfoView1(file:file)
+                                extraInfoView(file:file)
                             }
                         }
                     }.navigationBarTitle(validInitialPath.lastPathComponent)
@@ -147,7 +150,7 @@ func previewInit() {
 //    }
 //}
 
-struct extraInfoView1: View {
+struct extraInfoView: View {
     @ObservedObject var file: FBFile
 
     var body: some View {
