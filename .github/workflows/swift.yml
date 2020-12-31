@@ -17,7 +17,7 @@ jobs:
       run: swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"
     - name: Run tests
       #run: swift tests --enable-code-coverage -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"
-    - run: swift tests -v    
+      run: swift tests -v    
     - name: Test Coverage
       uses: maxep/spm-lcov-action@0.3.1
       with: 
