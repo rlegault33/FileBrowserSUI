@@ -3,7 +3,7 @@ import ViewInspector
 
 @testable import FileBrowserSUI
 
-extension extraInfoView1: Inspectable {}
+extension extraInfoView: Inspectable {}
 
 final class FileBrowserSUITests: XCTestCase {
 
@@ -81,7 +81,7 @@ final class FileBrowserSUITests: XCTestCase {
         let file = FBFile(filePath: resourceFile, xInfo0: accessor0, xInfo1: accessor1)
         XCTAssertFalse(info0)
         XCTAssertFalse(info1)
-        let view = extraInfoView1(file:file)
+        let view = extraInfoView(file:file)
         do {
            try view.inspect().hStack().hStack(0).image(1).callOnTapGesture()
         } catch {

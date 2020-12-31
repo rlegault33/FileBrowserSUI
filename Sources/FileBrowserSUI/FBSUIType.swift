@@ -201,7 +201,7 @@ public enum FBFileType: String {
         case .MP4: fileExtName = "image"
         default: fileExtName = "file"
         }
-        let uiImage = UIImage(named: fileExtName, in: .module, compatibleWith: nil)
+        let uiImage = UIImage(named: fileExtName)
         return uiImage!
     }
     

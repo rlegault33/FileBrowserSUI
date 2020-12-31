@@ -27,7 +27,6 @@ let package = Package(
             name: "FileBrowserSUITests",
             dependencies: ["FileBrowserSUI",
                            "ViewInspector"],
-            resources: [ .copy("Baymax.jpg"),
-                         .copy("3crBXeO.gif")]),
+            resources: [.copy("Resources")]),
     ]
 )
