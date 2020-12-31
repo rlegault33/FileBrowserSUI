@@ -21,6 +21,6 @@ jobs:
       #run: swift tests -v     
       run: xcodebuild test -destination 'platform=iOS Simulator,name=iPad (8th generation)' -scheme 'FileBrowserSUI-Package' -disableAutomaticPackageResolution -enableCodeCoverage YES
     - name: Test Coverage
-      uses: maxep/spm-lcov-action@0.3.1
+      uses: maxep/spm-lcov-action@1.2.6
       with: 
         output-file: ./coverage/lcov.info  
