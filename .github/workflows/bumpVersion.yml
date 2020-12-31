@@ -28,7 +28,8 @@ jobs:
           fetch-depth: '0'  
       # Runs a single command using the runners shell
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.17.2
+        #uses: anothrNick/github-tag-action@1.17.2
+          uses: anothrNick/github-tag-action@1.33.0
         env: 
           GITHUB_TOKEN: ${{ secrets.PERSONEL_TOKEN }}
           TAG_CONTEXT: branch
