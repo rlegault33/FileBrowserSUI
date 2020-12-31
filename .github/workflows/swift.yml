@@ -19,7 +19,7 @@ jobs:
     - name: Run tests
       #run: swift tests --enable-code-coverage -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"
       #run: swift tests -v     
-      run: xcodebuild test -destination 'platform=iOS name=iPhone 11' -scheme 'FileBrowserSUI-Package' -disableAutomaticPackageResolution -enableCodeCoverage YES
+      run: xcodebuild test -destination 'platform=iOS Simulator name=iPad (8th generation)' -scheme 'FileBrowserSUI-Package' -disableAutomaticPackageResolution -enableCodeCoverage YES
     - name: Test Coverage
       uses: maxep/spm-lcov-action@0.3.1
       with: 
