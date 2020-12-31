@@ -34,3 +34,4 @@ jobs:
           TAG_CONTEXT: branch
           DEFAULT_BUMP: minor
           WITH_V: false
+          RELEASE_BRANCH: main
