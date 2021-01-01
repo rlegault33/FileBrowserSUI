@@ -28,12 +28,12 @@ final class FileLinkViewTests: XCTestCase {
         
         let view = FileLinkView(item: item) { file in
             preview}
-        do {
-            try view.inspect().view(FileLinkView.self)
-            XCTAssert(false, "View did not throw error")
-        } catch {
-           
-        }
+//        do {
+//            try view.inspect().view(FileLinkView.self)
+//            XCTAssert(false, "View did not throw error")
+//        } catch {
+//
+//        }
     }
     
     func testListFileBrowserSUI() {
