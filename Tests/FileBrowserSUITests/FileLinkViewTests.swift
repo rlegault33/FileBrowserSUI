@@ -1,5 +1,6 @@
 import XCTest
 import ViewInspector
+import SwiftUI
 
 @testable import FileBrowserSUI
 
@@ -28,12 +29,7 @@ final class FileLinkViewTests: XCTestCase {
         
         let view = FileLinkView(item: item) { file in
             preview}
-//        do {
-//            try view.inspect().view(FileLinkView.self)
-//            XCTAssert(false, "View did not throw error")
-//        } catch {
-//
-//        }
+        XCTAssertThrowsError(try view.inspect().view(FileLinkView<EmptyView>.self))
     }
     
     func testListFileBrowserSUI() {
