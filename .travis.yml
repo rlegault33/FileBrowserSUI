@@ -1,6 +1,19 @@
 osx_image: xcode12.2
 language: swift
-script: 
- - swift package generate-xcodeproj
- - xcodebuild test -destination 'platform=iOS Simulator,name=iPad (8th generation)' -scheme 'FileBrowserSUI-Package' -disableAutomaticPackageResolution
- 
+github_token: ${{ secrets.PERSONEL_TOKEN }}
+branches: 
+  only: 
+    - main
+jobs:
+  include:
+  
+   - stage: iOS Build and Test
+     script: 
+     - swift package generate-xcodeproj
+     - xcodebuild test -destination 'platform=iOS Simulator,name=iPad (8th generation)' -scheme 'FileBrowserSUI-Package' -disableAutomaticPackageResolution
+   - stage: set tag 
+     script:
+     - git config --global user.email "rlegault33@yahoo.ca"
+     - git config --global user.name "R Legault"
+     - git tag $PACKAGE_VERSION
+     - git push --quite https://$github_token@github.com/rlegault33/FileBrowserSUI --tag > /dev/null 2>&1 
