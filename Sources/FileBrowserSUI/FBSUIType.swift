@@ -91,11 +91,10 @@ public class FBFile: ObservableObject, Hashable, Identifiable {
     func generateImage(completion: @escaping(UIImage?)->Void) {
         
         if self.type != .MP4 {
-            print("Not generating image")
             completion(self.type.image())
             return
         }
-        print("generate image for \(self.filePath)")
+        
         // Create a thumbnail for MP4 files
         let size = CGSize(width: 60, height: 90)
         let scale = UIScreen.main.scale

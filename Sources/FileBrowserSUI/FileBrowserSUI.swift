@@ -46,7 +46,6 @@ public struct ThumbnailImageView: View {
             Image(uiImage: fbFile.type.image()).onAppear() {
                 self.fbFile.generateImage() { image in
                         self.thumbnail = image
-                    print("thumbnail for \(self.fbFile.displayName)")
                 }
             }
         }
