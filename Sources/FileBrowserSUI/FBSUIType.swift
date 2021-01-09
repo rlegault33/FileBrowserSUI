@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import QuickLookThumbnailing
+
 public enum ExInfoId: Int, CaseIterable {
     case EXINFO1 = 0
     case EXINFO2 = 1
@@ -87,7 +88,36 @@ public class FBFile: ObservableObject, Hashable, Identifiable {
         }
     }
     
-    
+    func generateImage(completion: @escaping(UIImage?)->Void) {
+        
+        if self.type != .MP4 {
+            print("Not generating image")
+            completion(self.type.image())
+            return
+        }
+        print("generate image for \(self.filePath)")
+        // Create a thumbnail for MP4 files
+        let size = CGSize(width: 60, height: 90)
+        let scale = UIScreen.main.scale
+        
+        let request = QLThumbnailGenerator.Request(
+            fileAt: self.filePath,
+            size: size,
+            scale: scale,
+            representationTypes: .all)
+   
+        let generator = QLThumbnailGenerator.shared
+
+        generator.generateBestRepresentation(for: request) { thumbnail, error in
+            if let thumbnail = thumbnail {
+                completion(thumbnail.uiImage)
+            } else if let error = error {
+                // Handle error
+                print(error)
+            }
+        
+        }
+    }
     
     open func delete()
     {
@@ -142,10 +172,7 @@ public class FBFile: ObservableObject, Hashable, Identifiable {
             self.fileExInfo1Value = false
         }
     }
-
     
-    
-
     func getExInfo() -> [FileExtraInfo] {
         var array = [FileExtraInfo]()
         if let info = fileExInfo0 {
@@ -201,37 +228,8 @@ public enum FBFileType: String {
         case .MP4: fileExtName = "image"
         default: fileExtName = "file"
         }
-        let uiImage = UIImage(named: fileExtName)
+        let uiImage = UIImage(named: fileExtName, in: Bundle.module, compatibleWith: nil)
         return uiImage!
-    }
-    
-    func generateImage(fileName:URL, completion: @escaping(UIImage?)->Void) {
-        
-        if self != .MP4 {
-            completion(self.image())
-            return
-        }
-        // Create a thumbnail for MP4 files
-        let size = CGSize(width: 60, height: 90)
-        let scale = UIScreen.main.scale
-        
-        let request = QLThumbnailGenerator.Request(
-            fileAt: fileName,
-            size: size,
-            scale: scale,
-            representationTypes: .all)
-   
-        let generator = QLThumbnailGenerator.shared
-
-        generator.generateBestRepresentation(for: request) { thumbnail, error in
-            if let thumbnail = thumbnail {
-                completion(thumbnail.uiImage)
-            } else if let error = error {
-                // Handle error
-                print(error)
-            }
-        
-        }
     }
 }
 

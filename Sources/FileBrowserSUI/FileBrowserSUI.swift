@@ -33,6 +33,25 @@ public struct FileBrowserGeneric: View {
 }
 
 
+public struct ThumbnailImageView: View {
+    let fbFile: FBFile
+
+    @State private var thumbnail: UIImage? = nil
+    
+    public var body: some View {
+
+        if thumbnail != nil {
+            Image(uiImage: self.thumbnail!)
+        } else {
+            Image(uiImage: fbFile.type.image()).onAppear() {
+                self.fbFile.generateImage() { image in
+                        self.thumbnail = image
+                    print("thumbnail for \(self.fbFile.displayName)")
+                }
+            }
+        }
+    }
+}
 
 public struct FileBrowserSUI<LinkView: View>: View {
     
@@ -44,6 +63,8 @@ public struct FileBrowserSUI<LinkView: View>: View {
     let extraInfo0: FileExtraInfo?
     let extraInfo1: FileExtraInfo?
     
+    
+
     public var body: some View {
         HStack {
             List {
@@ -54,7 +75,8 @@ public struct FileBrowserSUI<LinkView: View>: View {
                     }) {
                         HStack  {
                             HStack {
-                                Image(uiImage: file.type.image())
+                                //Image(uiImage: file.type.image())
+                                ThumbnailImageView(fbFile: file)
                                 VStack {
                                     Text(file.displayName).font(.body).accessibility(identifier: "displayName")
                                     translateDateString(from: file.fileAttributes?.fileCreationDate() ?? Date()).font(.footnote)
