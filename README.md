@@ -17,7 +17,7 @@ The failing tag is incorrect, until SPM Testing is able to access Resource files
 # File Browser SUI
 iOS File Browser supporting Swift Packages. Use the default View or create your own and pass it on init to handle file selection. You can specify the starting path and include or exclude file types.
 
-:can:                |  Features
+:ca:                |  Features
 --------------------------|----------------------------
 :iphone: | Browse and select files and folders with a familiar UI on iOS.
 :eyeglasses: | Quickview most file types.
