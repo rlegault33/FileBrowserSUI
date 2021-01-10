@@ -22,7 +22,10 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FileBrowserSUI",
-            dependencies: []),
+            dependencies: [],
+            resources: [
+                .copy("Resources/Media.xcassets"), ]
+        ),
         .testTarget(
             name: "FileBrowserSUITests",
             dependencies: ["FileBrowserSUI",
