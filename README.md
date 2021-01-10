@@ -24,6 +24,7 @@ iOS File Browser supporting Swift Packages. Use the default View or create your 
 :pencil: | Edit/delete files.
 :gear: | Fully customizable.
 :ballot_box_with_check: | Each file has the option to allow the user to flag files via (up to 2) check boxes.
+:mag: | Thumbnail image for MP4 files
 
 ## Usage
 XCODE Select Project</br>
@@ -32,7 +33,7 @@ Copy the following link into Choose Package Repository Search Field</br>
 [http://github.com/rlegault33/FileBrowserSUI](http://github.com/rlegault33/FileBrowserSUI)
 
 ## Specify a file view
-You can create your own File handler view that you pass into the FileBrowserSUI on creation. When the user selects a file ti will use the view you specify. The view must have a variable url:URL that will contain the URL of the selected file.
+You can create your own File handler view that you pass into the FileBrowserSUI on creation. When the user selects a file it will use the view you specify. The view must have a URL variable that will contain the URL of the selected file.
 
 ```swift
 struct AppFileSelectedView: View {
