@@ -1,6 +1,7 @@
 # FileBrowserSUI
 ![FileBrowserSUI - iOS File Finder Swift Package in SwiftUI](https://raw.github.com/rlegault33/FileBrowserSUI/main/README.assets/FileBrowserSUI_Title.png)
 
+The failing tag is incorrect, until SPM Testing is able to access Resource files the CI tests will continue to fail.</br>
 ![Swift](https://github.com/rlegault33/FileBrowserSUI/workflows/Swift/badge.svg?branch=main)
 <!--[![Build Status](https://travis-ci.com/rlegault33/FileBrowserSUI.svg?branch=main)](https://travis-ci.com/rlegault33/FileBrowserSUI) -->
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/rlegault33/FileBrowserSUI)
