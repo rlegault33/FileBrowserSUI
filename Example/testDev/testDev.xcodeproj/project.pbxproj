@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		79BDC7A625AA8B8C00368BE7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDC7A525AA8B8C00368BE7 /* ContentView.swift */; };
 		79BDC7A825AA8B8C00368BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BDC7A725AA8B8C00368BE7 /* Assets.xcassets */; };
 		79BDC7AB25AA8B8C00368BE7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BDC7AA25AA8B8C00368BE7 /* Preview Assets.xcassets */; };
+		79BDC7F525AB638B00368BE7 /* FileBrowserSUI in Frameworks */ = {isa = PBXBuildFile; productRef = 79BDC7F425AB638B00368BE7 /* FileBrowserSUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79BDC7F525AB638B00368BE7 /* FileBrowserSUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +87,9 @@
 			dependencies = (
 			);
 			name = testDev;
+			packageProductDependencies = (
+				79BDC7F425AB638B00368BE7 /* FileBrowserSUI */,
+			);
 			productName = testDev;
 			productReference = 79BDC7A025AA8B8C00368BE7 /* testDev.app */;
 			productType = "com.apple.product-type.application";
@@ -112,6 +117,9 @@
 				Base,
 			);
 			mainGroup = 79BDC79725AA8B8C00368BE7;
+			packageReferences = (
+				79BDC7F325AB638B00368BE7 /* XCRemoteSwiftPackageReference "FileBrowserSUI" */,
+			);
 			productRefGroup = 79BDC7A125AA8B8C00368BE7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -328,6 +336,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		79BDC7F325AB638B00368BE7 /* XCRemoteSwiftPackageReference "FileBrowserSUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rlegault33/FileBrowserSUI.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		79BDC7F425AB638B00368BE7 /* FileBrowserSUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79BDC7F325AB638B00368BE7 /* XCRemoteSwiftPackageReference "FileBrowserSUI" */;
+			productName = FileBrowserSUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 79BDC79825AA8B8C00368BE7 /* Project object */;
 }

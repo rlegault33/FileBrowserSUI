@@ -23,6 +23,7 @@ let package = Package(
         .target(
             name: "FileBrowserSUI",
             dependencies: [],
+            exclude: ["README.md", "Example", "README.assets"],
             resources: [
                 .copy("Resources/Media.xcassets"), ]
         ),
