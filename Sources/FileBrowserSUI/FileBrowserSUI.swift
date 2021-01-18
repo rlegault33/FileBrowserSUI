@@ -2,56 +2,6 @@ import SwiftUI
 import Foundation
 
 @available(iOS 13.0.0, *)
-
-public struct FileBrowserGeneric: View {
-    @State var fileList:[FBFile] = []
-    internal var didAppear: ((Self) -> Void)?
-    let validInitialPath: URL
-    let extraInfo0: FileExtraInfo?
-    let extraInfo1: FileExtraInfo?
-    
-    public var body: some View {
-        FileBrowserSUI(initialPath: validInitialPath,
-                       xInfo0: extraInfo0, xInfo1: extraInfo1) {
-            fileUrl in
-               PreviewController(url: fileUrl)
-        }
-    }
-    
-    public init(initialPath: URL?, xInfo0:FileExtraInfo?, xInfo1: FileExtraInfo?) {
-        validInitialPath = initialPath ?? FileParser.sharedInstance.documentsURL()
-        extraInfo0 = xInfo0
-        extraInfo1 = xInfo1
-        
-    }
-    public init() {
-        validInitialPath = FileParser.sharedInstance.documentsURL()
-        extraInfo0 = nil
-        extraInfo1 = nil
-       
-    }
-}
-
-
-public struct ThumbnailImageView: View {
-    let fbFile: FBFile
-
-    @State private var thumbnail: UIImage? = nil
-    
-    public var body: some View {
-
-        if thumbnail != nil {
-            Image(uiImage: self.thumbnail!)
-        } else {
-            Image(uiImage: fbFile.type.image()).onAppear() {
-                self.fbFile.generateImage() { image in
-                        self.thumbnail = image
-                }
-            }
-        }
-    }
-}
-
 public struct FileBrowserSUI<LinkView: View>: View {
     
     let linkView:(URL)->LinkView
@@ -62,8 +12,6 @@ public struct FileBrowserSUI<LinkView: View>: View {
     let extraInfo0: FileExtraInfo?
     let extraInfo1: FileExtraInfo?
     
-    
-
     public var body: some View {
         HStack {
             List {
