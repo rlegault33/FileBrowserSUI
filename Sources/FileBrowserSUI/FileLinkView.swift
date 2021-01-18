@@ -19,7 +19,6 @@ struct FileLinkView<LinkView:View>: View {
                     self.linkView(filePath)
                 }
             } else {
-                //PreviewController(url:item.filePath)
                 self.linkView(item.filePath)
             }
         }

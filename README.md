@@ -44,12 +44,33 @@ struct AppFileSelectedView: View {
 }
 ```
 
-Pass View to the package on init by adding a closure to the init call. If no closure is provided it will use the iOS Quickview functionality
+Pass View to the package on init by adding a closure to the init call. 
 ```swift
-FileBrowserSUI(initialPath: initPath) { value in
-    AppFileSelectedView(url:value)
+NavigationView {
+    FileBrowserSUI(initialPath: initPath) { value in
+        AppFileSelectedView(url:value)
+    }
 }
 ```
+
+
+
+
+If you do not supply a view enclosure then you must instantiate the FileBrowserSUI with FileBroswerSUIPreview like so.
+
+Usage Example:
+```swift
+NavigationView {
+    FileBrowserSUIPreview(initialPath: initPath,
+                       xInfo0: FileExtraInfo(title: "Offense", get: fileMapInfo.get0, set: fileMapInfo.set0, delete: fileMapInfo.delete),
+                       xInfo1: FileExtraInfo(title: "Defense", get: fileMapInfo.get1, set: fileMapInfo.set1, delete: fileMapInfo.delete))
+}
+```
+### IMPORTANT
+You must make sure that FileBrowserSUI* is inside a NavigationView for the NavigationLinks to work.
+
+### FUTURE:
+If no closure is provided it will use the iOS Quickview functionality. (Still trying to figure this out.)
 
 ## Check mark 
 For each check mark you must provide a instance of **FileExtraInfo** that you supply 
@@ -59,13 +80,6 @@ For each check mark you must provide a instance of **FileExtraInfo** that you su
 * delete(URL) -> Bool 
  
 It is your responsiblity to store the information by its URL as required by your app and supply it via the get() and update it via the set() and delete it from your storage.
-
-Usage Example:
-```swift
-FileBrowserGeneric(initialPath: initPath,
-                   xInfo0: FileExtraInfo(title: "Offense", get: fileMapInfo.get0, set: fileMapInfo.set0, delete: fileMapInfo.delete),
-                   xInfo1: FileExtraInfo(title: "Defense", get: fileMapInfo.get1, set: fileMapInfo.set1, delete: fileMapInfo.delete))
-```
 
 See the xcode project **Example_FileBrowser_SUI** in the FileBrowserSUI package for the full code.
 
