@@ -38,8 +38,8 @@ struct ContentView : View {
             
             NavigationView{
                 FileBrowserSUI(initialPath: initPath,
-                               xInfo0: FileExtraInfo(title: "Offense", get: fileMapInfo.get0, set: fileMapInfo.set0, delete: fileMapInfo.delete),
-                               xInfo1: FileExtraInfo(title:"Defense", get: fileMapInfo.get1, set: fileMapInfo.set1, delete: fileMapInfo.delete))
+                               xInfo0: FileExtraInfo(get: fileMapInfo.get0, list: fileMapInfo.getList0, set: fileMapInfo.set0, delete: fileMapInfo.delete),
+                               xInfo1: FileExtraInfo(get: fileMapInfo.get1, list: fileMapInfo.getListA, set: fileMapInfo.set1, delete: fileMapInfo.delete))
                 {
                  value in
                         AppFileSelectedView(url:value)
@@ -70,9 +70,18 @@ struct ContentViewFBSUI_QuickView : View {
         .sheet(isPresented: $showSheet, content: {
             
             NavigationView{
-                FileBrowserGeneric(initialPath: initPath,
-                               xInfo0: FileExtraInfo(title: "Offense", get: fileMapInfo.get0, set: fileMapInfo.set0, delete: fileMapInfo.delete),
-                               xInfo1: FileExtraInfo(title:"Defense", get: fileMapInfo.get1, set: fileMapInfo.set1, delete: fileMapInfo.delete))
+                FileBrowserSUIPreview(
+                    initialPath: initPath,
+                    xInfo0: FileExtraInfo(
+                        get: fileMapInfo.get0,
+                        list: fileMapInfo.getList0,
+                        set: fileMapInfo.set0,
+                        delete: fileMapInfo.delete),
+                    xInfo1: FileExtraInfo(
+                        get: fileMapInfo.get1,
+                        list: fileMapInfo.getListA,
+                        set: fileMapInfo.set1,
+                        delete: fileMapInfo.delete))
                 .navigationBarTitle(initPath.lastPathComponent)
             }
                 

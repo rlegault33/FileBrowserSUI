@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		791375722606C91800D587E1 /* FileBrowserSUI in Frameworks */ = {isa = PBXBuildFile; productRef = 791375712606C91800D587E1 /* FileBrowserSUI */; };
 		79953E92259C333E0073135A /* Example_FileBrowserSUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79953E91259C333E0073135A /* Example_FileBrowserSUIApp.swift */; };
 		79953E94259C333E0073135A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79953E93259C333E0073135A /* ContentView.swift */; };
 		79953E96259C333F0073135A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79953E95259C333F0073135A /* Assets.xcassets */; };
@@ -20,11 +21,10 @@
 		79953EBA259C33E80073135A /* hl_P1_M00S00_D15.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 79953EB2259C33E80073135A /* hl_P1_M00S00_D15.mp4 */; };
 		79953EBB259C33E80073135A /* hl_P2_M00S00_D16.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 79953EB4259C33E80073135A /* hl_P2_M00S00_D16.mp4 */; };
 		79953EBC259C33E80073135A /* Stitch.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 79953EB5259C33E80073135A /* Stitch.jpg */; };
-		79953EC0259C344B0073135A /* FileBrowserSUI in Frameworks */ = {isa = PBXBuildFile; productRef = 79953EBF259C344B0073135A /* FileBrowserSUI */; };
-		79953F1F259CAC0A0073135A /* MapExFileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79953F1E259CAC0A0073135A /* MapExFileInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		791375742606C93300D587E1 /* FileBrowserSUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FileBrowserSUI; path = ../..; sourceTree = "<group>"; };
 		79953E8E259C333E0073135A /* Example_FileBrowserSUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example_FileBrowserSUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79953E91259C333E0073135A /* Example_FileBrowserSUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example_FileBrowserSUIApp.swift; sourceTree = "<group>"; };
 		79953E93259C333E0073135A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,18 +48,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79953EC0259C344B0073135A /* FileBrowserSUI in Frameworks */,
+				791375722606C91800D587E1 /* FileBrowserSUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7913756E2606C85B00D587E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		79953E85259C333E0073135A = {
 			isa = PBXGroup;
 			children = (
+				791375742606C93300D587E1 /* FileBrowserSUI */,
 				79953E90259C333E0073135A /* Example_FileBrowserSUI */,
 				79953E8F259C333E0073135A /* Products */,
+				7913756E2606C85B00D587E1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -150,7 +159,7 @@
 			);
 			name = Example_FileBrowserSUI;
 			packageProductDependencies = (
-				79953EBF259C344B0073135A /* FileBrowserSUI */,
+				791375712606C91800D587E1 /* FileBrowserSUI */,
 			);
 			productName = Example_FileBrowserSUI;
 			productReference = 79953E8E259C333E0073135A /* Example_FileBrowserSUI.app */;
@@ -163,7 +172,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1230;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					79953E8D259C333E0073135A = {
 						CreatedOnToolsVersion = 12.3;
@@ -180,7 +189,7 @@
 			);
 			mainGroup = 79953E85259C333E0073135A;
 			packageReferences = (
-				79953EBE259C344B0073135A /* XCRemoteSwiftPackageReference "FileBrowserSUI" */,
+				791375702606C91800D587E1 /* XCRemoteSwiftPackageReference "FileBrowserSUI" */,
 			);
 			productRefGroup = 79953E8F259C333E0073135A /* Products */;
 			projectDirPath = "";
@@ -219,7 +228,6 @@
 				79953EA6259C33C30073135A /* FileManager+extensions.swift in Sources */,
 				79953E92259C333E0073135A /* Example_FileBrowserSUIApp.swift in Sources */,
 				79953EA9259C33DE0073135A /* MapExFileInfo.swift in Sources */,
-				79953F1F259CAC0A0073135A /* MapExFileInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,7 +360,7 @@
 				DEVELOPMENT_TEAM = 29HV38C972;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Example_FileBrowserSUI/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -374,7 +382,7 @@
 				DEVELOPMENT_TEAM = 29HV38C972;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Example_FileBrowserSUI/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -410,20 +418,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		79953EBE259C344B0073135A /* XCRemoteSwiftPackageReference "FileBrowserSUI" */ = {
+		791375702606C91800D587E1 /* XCRemoteSwiftPackageReference "FileBrowserSUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rlegault33/FileBrowserSUI.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 4.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		79953EBF259C344B0073135A /* FileBrowserSUI */ = {
+		791375712606C91800D587E1 /* FileBrowserSUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79953EBE259C344B0073135A /* XCRemoteSwiftPackageReference "FileBrowserSUI" */;
+			package = 791375702606C91800D587E1 /* XCRemoteSwiftPackageReference "FileBrowserSUI" */;
 			productName = FileBrowserSUI;
 		};
 /* End XCSwiftPackageProductDependency section */

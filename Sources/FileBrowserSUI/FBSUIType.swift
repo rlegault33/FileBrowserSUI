@@ -21,20 +21,20 @@ public enum ExInfoId: Int, CaseIterable {
         }
     }
 }
-
-public typealias FileExtraInfoGet = (URL) -> Bool
-public typealias FileExtraInfoSet = (URL, Bool) -> Void
-
+public typealias FileExtraInfoDelete = (URL) -> Void
+public typealias FileExtraInfoGet = (URL) -> Int
+// Int is the index of the [String] that is selected in FileExtraInfoList
+public typealias FileExtraInfoSet = (URL, Int) -> Void
+public typealias FileExtraInfoList = (URL) -> [String]
 public struct  FileExtraInfo {
-    
-    public let title: String
     public let get: FileExtraInfoGet
     public let set: FileExtraInfoSet
-    public let delete: FileExtraInfoGet
+    public let list: FileExtraInfoList
+    public let delete: FileExtraInfoDelete
     
-    public init(title: String, get: @escaping FileExtraInfoGet, set: @escaping FileExtraInfoSet, delete: @escaping FileExtraInfoGet) {
-        self.title = title
+    public init(get: @escaping FileExtraInfoGet, list: @escaping FileExtraInfoList, set: @escaping FileExtraInfoSet, delete: @escaping FileExtraInfoDelete) {
         self.get = get
+        self.list = list // drop down select list
         self.set = set
         self.delete = delete
     }
@@ -71,16 +71,15 @@ public class FBFile: ObservableObject, Hashable, Identifiable {
     public var fileExInfo0: FileExtraInfo?
     public var fileExInfo1: FileExtraInfo?
     
-    // stores ability to get/set store bool info about the file
-    // 2 Bool values
-    @Published var fileExInfo0Value: Bool {
+    // stores the selected index selected from the list
+    @Published var fileExInfo0Value: Int {
         didSet {
             if let fileExInfo = fileExInfo0 {
                 fileExInfo.set(filePath, fileExInfo0Value)
             }
         }
     }
-    @Published var fileExInfo1Value: Bool {
+    @Published var fileExInfo1Value: Int {
         didSet {
             if let fileExInfo = fileExInfo1 {
                 fileExInfo.set(filePath, fileExInfo1Value)
@@ -159,16 +158,16 @@ public class FBFile: ObservableObject, Hashable, Identifiable {
         self.displayName = filePath.lastPathComponent
         if let xInfo0 = xInfo0 {
             fileExInfo0 = xInfo0
-            self.fileExInfo0Value = fileExInfo0!.get(filePath)
+            self.fileExInfo0Value = xInfo0.get(filePath)
         } else {
-            self.fileExInfo0Value = false
+            self.fileExInfo0Value = 0
         }
         
         if let xInfo1 = xInfo1 {
             fileExInfo1 = xInfo1
             self.fileExInfo1Value = xInfo1.get(filePath)
         } else {
-            self.fileExInfo1Value = false
+            self.fileExInfo1Value = 0
         }
     }
     
@@ -262,3 +261,29 @@ func getFileAttributes(_ filePath: URL) -> NSDictionary? {
     return nil
 }
 
+
+import class Foundation.Bundle
+private class BundleFinder {}
+extension Foundation.Bundle {
+        /// Returns the resource bundle associated with the current Swift module.
+        static var current: Bundle = {
+                // This is your `target.path` (located in your `Package.swift`) by replacing all the `/` by the `_`.
+                let bundleName = "FileBrowserSUITests"
+                let candidates = [
+                        // Bundle should be present here when the package is linked into an App.
+                        Bundle.main.resourceURL,
+                        // Bundle should be present here when the package is linked into a framework.
+                        Bundle(for: BundleFinder.self).resourceURL,
+                        // For command-line tools.
+                        Bundle.main.bundleURL,
+                ]
+                for candidate in candidates {
+                        let bundlePath = candidate?.appendingPathComponent(bundleName + ".bundle")
+                        if let bundle = bundlePath.flatMap(Bundle.init(url:)) {
+                                return bundle
+                        }
+                }
+                
+                return Bundle(for: BundleFinder.self)
+        }()
+}

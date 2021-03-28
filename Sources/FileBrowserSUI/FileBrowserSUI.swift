@@ -3,6 +3,8 @@ import Foundation
 
 @available(iOS 13.0.0, *)
 public struct FileBrowserSUI<LinkView: View>: View {
+ 
+    
     
     let linkView:(URL)->LinkView
     
@@ -31,7 +33,11 @@ public struct FileBrowserSUI<LinkView: View>: View {
                             }
                             Spacer()
                             if !file.isDirectory {
-                                extraInfoView(file:file)
+                                if #available(iOS 14.0, *) {
+                                    ExtraInfoView(file:file)
+                                } else {
+                                    // Fallback on earlier versions
+                                }
                             }
                         }
                     }.navigationBarTitle(validInitialPath.lastPathComponent)
@@ -83,26 +89,31 @@ public struct FileBrowserSUI<LinkView: View>: View {
             
         }
     }
+    
+
 }
 
 var extraInfo0: FileExtraInfo?
 var extraInfo1: FileExtraInfo?
 func previewInit() {
-    extraInfo0 = FileExtraInfo(title: "test0",
+    func getList(url:URL) ->[String] {
+        return ["Test", "1", "2"]
+    }
+    extraInfo0 = FileExtraInfo(
                                get: {_ in
-                                return true
-                               }, set: {file, value in
+                                return 0
+                               }, list: getList, set: {file, value in
                                 return
                                }, delete: {_ in
-                                return true
+                                return
                                })
-    extraInfo0 = FileExtraInfo(title: "test0",
+    extraInfo0 = FileExtraInfo(
                                get: {_ in
-                                return false
-                               }, set: {file, value in
+                                return 0
+                               }, list: getList, set: {file, value in
                                 return
                                }, delete: {_ in
-                                return true
+                                return
                                })
 }
 
@@ -119,32 +130,10 @@ func previewInit() {
 //    }
 //}
 
-struct extraInfoView: View {
-    @ObservedObject var file: FBFile
 
-    var body: some View {
-        HStack {
-            if let exInfo = file.fileExInfo0 {
-                HStack {
-                    Text(exInfo.title)
-                    Image(systemName: file.fileExInfo0Value ? "checkmark.square" : "square"
-                    ).onTapGesture {
-                        file.fileExInfo0Value.toggle()
-                    }.accessibility(identifier: "ExInfo0Select")
-                }
-            }
-            if let exInfo = file.fileExInfo1 {
-                HStack {
-                    Text(exInfo.title)
-                    Image(systemName: file.fileExInfo1Value ? "checkmark.square" : "square"
-                    )
-                    .onTapGesture {
-                        file.fileExInfo1Value.toggle()
-                    }
-                    .accessibility(identifier: "ExInfo1Select")
-                }
-                
-            }
-        }
-    }
-}
+
+
+
+
+
+
