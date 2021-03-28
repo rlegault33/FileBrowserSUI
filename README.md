@@ -23,7 +23,7 @@ iOS File Browser supporting Swift Packages. Use the default View or create your 
 :eyeglasses: | Quickview most file types.
 :pencil: | Edit/delete files.
 :gear: | Fully customizable.
-:ballot_box_with_check: | Each file has the option to allow the user to flag files via (up to 2) check boxes.
+:ballot_box_with_check: | Each file has the option to allow the develop to specify text descriptors that the user can select from, from a drop down menu
 :mag: | Thumbnail image for MP4 files
 
 ## Usage
@@ -72,17 +72,17 @@ You must make sure that FileBrowserSUI* is inside a NavigationView for the Navig
 ### FUTURE:
 If no closure is provided it will use the iOS Quickview functionality. (Still trying to figure this out.)
 
-## Check mark 
+## Descriptor text
 For each check mark you must provide a instance of **FileExtraInfo** that you supply 
-* title: String
-* set(URL, Bool) -> Void
-* get(URL) -> Bool
+* get(URL) -> Int  // Index into list array that is currently selected, if value is out of range then it will default to 0
+* list(URL) -> [String]
+* set(URL, Int) -> Void
 * delete(URL) -> Bool 
  
-It is your responsiblity to store the information by its URL as required by your app and supply it via the get() and update it via the set() and delete it from your storage.
+It is the developer responsiblity to store the information by its URL as required by your app and supply it via the get() and update it via the set() and delete it from your storage.
 
-See the xcode project **Example_FileBrowser_SUI** in the FileBrowserSUI package for the full code.
+See the xcode project **Example_FileBrowser_SUI** in the FileBrowserSUI package for the full example code.
 
 
-![FileBrowserSUI - screen shot](https://raw.github.com/rlegault33/FileBrowserSUI/main/README.assets/FileBrowserSUI_Shot1.png)
+![FileBrowserSUI - screen shot](https://raw.github.com/rlegault33/FileBrowserSUI/main/README.assets/FileBrowserSUI_Shot_5.0.0.png)
 
