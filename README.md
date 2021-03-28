@@ -62,8 +62,8 @@ Usage Example:
 ```swift
 NavigationView {
     FileBrowserSUIPreview(initialPath: initPath,
-                       xInfo0: FileExtraInfo(title: "Offense", get: fileMapInfo.get0, set: fileMapInfo.set0, delete: fileMapInfo.delete),
-                       xInfo1: FileExtraInfo(title: "Defense", get: fileMapInfo.get1, set: fileMapInfo.set1, delete: fileMapInfo.delete))
+                       xInfo0: FileExtraInfo(get: fileMapInfo.get0, list: fileMapInfo.list0, set: fileMapInfo.set0, delete: fileMapInfo.delete),
+                       xInfo1: FileExtraInfo(get: fileMapInfo.get1, list: fileMapInfo.list1, set: fileMapInfo.set1, delete: fileMapInfo.delete))
 }
 ```
 ### IMPORTANT
@@ -77,7 +77,7 @@ For each check mark you must provide a instance of **FileExtraInfo** that you su
 * get(URL) -> Int  // Index into list array that is currently selected, if value is out of range then it will default to 0
 * list(URL) -> [String]
 * set(URL, Int) -> Void
-* delete(URL) -> Bool 
+* delete(URL) -> Void
  
 It is the developer responsiblity to store the information by its URL as required by your app and supply it via the get() and update it via the set() and delete it from your storage.
 
