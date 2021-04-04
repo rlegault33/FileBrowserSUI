@@ -4,8 +4,6 @@ import Foundation
 @available(iOS 13.0.0, *)
 public struct FileBrowserSUI<LinkView: View>: View {
  
-    
-    
     let linkView:(URL)->LinkView
     
     @State var fileList:[FBFile] = []
@@ -33,11 +31,11 @@ public struct FileBrowserSUI<LinkView: View>: View {
                             }
                             Spacer()
                             if !file.isDirectory {
-                                if #available(iOS 14.0, *) {
+                                //if #available(iOS 14.0, *) {
                                     ExtraInfoView(file:file)
-                                } else {
+                                //} else {
                                     // Fallback on earlier versions
-                                }
+                                //}
                             }
                         }
                     }.navigationBarTitle(validInitialPath.lastPathComponent)
@@ -100,17 +98,19 @@ func previewInit() {
         return ["Test", "1", "2"]
     }
     extraInfo0 = FileExtraInfo(
-                               get: {_ in
-                                return 0
-                               }, list: getList, set: {file, value in
-                                return
-                               }, delete: {_ in
-                                return
-                               })
+                              dropDownTitle: "Description1",
+                              get: {_ in
+                                  return 0
+                              }, list: getList, set: {file, value in
+                                  return
+                              }, delete: {_ in
+                                  return
+                              })
     extraInfo0 = FileExtraInfo(
-                               get: {_ in
+                             dropDownTitle: "Description2",
+                             get: {_ in
                                 return 0
-                               }, list: getList, set: {file, value in
+                             }, list: getList, set: {file, value in
                                 return
                                }, delete: {_ in
                                 return

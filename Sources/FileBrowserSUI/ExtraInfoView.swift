@@ -17,7 +17,7 @@ struct ExtraInfoView: View {
     @State var list0 = []
     @State var list1 = []
     var body: some View {
-        HStack(alignment:.bottom) {
+        HStack(alignment:.bottom, spacing:10) {
             if let exInfo = file.fileExInfo0 {
                 HStack {
                     DropDownDescriptionView(idx: exInfo.get(file.filePath), fileExtraInfo: exInfo, fileUrl: file.filePath)

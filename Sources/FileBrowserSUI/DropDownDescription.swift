@@ -13,27 +13,25 @@ struct DropDownDescriptionView: View {
     var fileExtraInfo: FileExtraInfo
     var fileUrl : URL
     
-    init(idx test: Int,  fileExtraInfo f: FileExtraInfo,  fileUrl u: URL) {
+    init(idx test: Int,  fileExtraInfo: FileExtraInfo,  fileUrl: URL) {
         
-        self.fileExtraInfo = f
-        self.fileUrl = u
+        self.fileExtraInfo = fileExtraInfo
+        self.fileUrl = fileUrl
         let i = DropDownDescriptionView.testIdx(test: test, list: fileExtraInfo.list(fileUrl) )
         _idx = State(initialValue: i)
     }
     var body: some View {
         VStack() {
-            
             VStack() {
                 let list = fileExtraInfo.list(fileUrl)
                 Text(list[idx]).fontWeight(.bold).foregroundColor(.black)
-                Picker("Descriptors", selection: $idx) {
-                    Print("DropDown")
+                Picker(fileExtraInfo.dropDownTitle, selection: $idx) {
                     ForEach(list.indices, id: \.self){ (index: Int) in
                         Text(list[index])
                     }
                 }.pickerStyle(MenuPickerStyle())
                 .onChange(of: idx, perform: { value in
-                    print("value=\(value)")
+                    print("\(fileUrl.lastPathComponent) value=\(value)")
                     fileExtraInfo.set(fileUrl, value)
                 })
             }
@@ -61,8 +59,8 @@ struct DropDownDescriptionView_Previews: PreviewProvider {
         return
     }
     static var previews: some View {
-        let fileExtraInfo = FileExtraInfo(get: testget, list: testlist, set: testset, delete: testdelete)
-            DropDownDescriptionView(idx: testValue, fileExtraInfo: fileExtraInfo, fileUrl: URL(string: "test")!)
+        let fileExtraInfo = FileExtraInfo(dropDownTitle: "test1", get: testget, list: testlist, set: testset, delete: testdelete)
+        DropDownDescriptionView(idx: testValue, fileExtraInfo: fileExtraInfo, fileUrl: URL(string: "test")!)
     }
 }
 
