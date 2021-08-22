@@ -3,7 +3,7 @@ import Foundation
 
 @available(iOS 13.0.0, *)
 public struct FileBrowserSUI<LinkView: View>: View {
- 
+    @Environment(\.presentationMode) var presentationMode // alow it to self dismiss incase we are fullscreen
     let linkView:(URL)->LinkView
     
     @State var fileList:[FBFile] = []
@@ -39,6 +39,7 @@ public struct FileBrowserSUI<LinkView: View>: View {
                             }
                         }
                     }.navigationBarTitle(validInitialPath.lastPathComponent)
+                     
                 }.onDelete( perform: deleteFile)
             }
         }.onAppear {
@@ -46,9 +47,11 @@ public struct FileBrowserSUI<LinkView: View>: View {
             fileList.removeAll()
             fileList.append(contentsOf: tmp)
             self.didAppear?(self)
-        }
-
-        
+        }.toolbar{
+            Button("Dismiss") {
+                presentationMode.wrappedValue.dismiss()
+            }
+       }
     }
     public init(initialPath: URL?, xInfo0:FileExtraInfo?, xInfo1: FileExtraInfo?, @ViewBuilder linkView: @escaping (URL)->LinkView) {
         validInitialPath = initialPath ?? FileParser.sharedInstance.documentsURL()
